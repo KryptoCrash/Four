@@ -129,7 +129,7 @@ function Lobby(Players) {
                     if (lWin.length >= 4) {
                         this.Players.forEach(function(p) {
                             p.emit('win', {
-                                Status: _case.Clicker == p.ID ? 'gagné' : 'perdu',
+                                Status: _case.Clicker == p.ID ? 'win' : 'loose',
                                 CasesWin: lWin
                             });
                         });

@@ -153,7 +153,7 @@
 
     <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
     <script type="text/javascript">
-        var socket = io.connect('http://www.davenstudio.com:3000/');
+        var socket = io.connect('http://localhost:3000');
         var Cases = [];
         var End = false;
 
@@ -161,7 +161,7 @@
             CancelMessage();
             document.getElementById('colorPlay').textContent = data.Name;
             document.getElementById('grid').style.borderCollapse = 'separate';
-            document.getElementById('play').innerHTML = 'Rejouer';
+            document.getElementById('play').innerHTML = 'Restart';
             document.getElementById('play').style.opacity = '';
             document.getElementById('colorPlay').className = 'cellRed';
             document.getElementById('myname').style.borderBottomColor = data.ID == 1 ? '#F73859' : '#29D2E4';
@@ -196,7 +196,7 @@
 
         socket.on('win', function(data) {
             if(data !== 0){
-                Message('Vous avez ' + data.Status);
+                Message('You ' + data.Status);
                 var CasesWin = [];
                 data.CasesWin.forEach(function(_caseWin) { CasesWin.push(CaseXY(_caseWin.X, _caseWin.Y)); });
 
@@ -205,7 +205,7 @@
                         _case.Element.style.opacity = .2;
                 });
             } else {
-                Message('Egalité');
+                Message('Equality');
                 Cases.forEach(function(_case){
                     _case.Element.style.opacity = .2;
                 });
@@ -222,7 +222,7 @@
         });
 
         socket.on('wait', function() {
-            Message('En attente d\'un joueur');
+            Message('Waiting for a player...');
             document.getElementById('play').style.opacity = .5;
         });
 
@@ -231,7 +231,7 @@
         });
 
         socket.on('leave', function(){
-            Message('Votre adversaire a quitté la partie');
+            Message('Your opponent leave the game');
             Cases.forEach(function(_case) {
                 if(_case.Element.Clicker > 0)
                     _case.Element.style.opacity = .2;
@@ -260,11 +260,10 @@
                 _case.Element.className = '';
                 _case.Element.style.opacity = '';
             });
-            document.getElementById('colorPlay').textContent = 'Puissance 4';
+            document.getElementById('colorPlay').textContent = 'Four';
             document.getElementById('myname').style.borderBottomColor = '';
             document.getElementById('colorPlay').className = '';
             document.getElementById('grid').style.borderCollapse = '';
-            console.log(document.getElementById('myname').value);
             End = false;
             socket.emit('search', document.getElementById('myname').value);
         }
@@ -323,7 +322,7 @@
         }
     </script>
 
-    <title>Puissance 4</title>
+    <title>Four</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:100" rel="stylesheet">
     <link rel="apple-touch-icon" sizes="57x57" href="favicons/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="favicons/apple-icon-60x60.png">
@@ -344,13 +343,13 @@
     <meta name="theme-color" content="#ffffff">
 </head>
 
-<body onload="Initialize(); Message('Cliquez sur Jouer')">
+<body onload="Initialize(); Message('Press on the play button')">
     <div class="noselect">
-        <header id="colorPlay">Puissance 4</header>
-        <input type="text" maxlength="15" id="myname" value="Sans nom" onchange="NameUpdate()" onkeydown="NameUpdate()" onkeypress="NameUpdate()" onpaste="NameUpdate()" oninput="NameUpdate()"/>
+        <header id="colorPlay">Four</header>
+        <input type="text" maxlength="15" id="myname" value="Anonymous" onchange="NameUpdate()" onkeydown="NameUpdate()" onkeypress="NameUpdate()" onpaste="NameUpdate()" oninput="NameUpdate()"/>
         <table id="grid"></table>
         <h1 id="info"></h1>
-        <button onclick="Play()" id="play">Jouer</button>
+        <button onclick="Play()" id="play">Play</button>
     </div>
 </body>
 </html>
