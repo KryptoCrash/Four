@@ -1,4 +1,4 @@
-Puissance (Connect 4) Multiplayer
+A Connect Four Multiplayer game
 
 To run the server you need:
 1) Install NodeJS (https://nodejs.org/)
